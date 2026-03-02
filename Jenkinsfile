@@ -1,9 +1,8 @@
 pipeline {
-    agent any
-
-    tools {
-        jdk 'java'
-        maven 'M3'
+    agent {
+        docker {
+                 image 'maven:3.9.6-eclipse-temurin-17'
+            }
     }
 
     stages {
@@ -12,8 +11,13 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+stage('Docker Build') {
+    steps {
+        sh 'docker build -t rohith/ecommerce-app .'
+           } 
+      }
     }
-}
+ }
 
 
 
